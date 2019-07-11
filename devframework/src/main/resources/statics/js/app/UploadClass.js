@@ -36,7 +36,7 @@ app.uploadClass = {
                 cache: false,
                 timeout: 600000,
                 success: function (data) {
-                    //console.log(data);
+                    console.log(data);
                     var $classList = data.classes;
                     
                     $.each($classList, function( i, classe ) {

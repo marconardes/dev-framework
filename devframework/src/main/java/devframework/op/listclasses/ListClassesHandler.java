@@ -9,15 +9,14 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-<<<<<<< HEAD
 
 import devframework.domain.FileClass;
 import devframework.op.uploadfile.PersistFile;
-=======
+
 
 import devframework.domain.ClassDescriptor;
 import devframework.services.PersistenceService;
->>>>>>> develop
+
 import devframework.servlet.IJsonRequestHandler;
 
 /**

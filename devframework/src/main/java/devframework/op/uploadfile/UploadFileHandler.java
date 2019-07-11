@@ -38,11 +38,16 @@ public class UploadFileHandler implements IJsonRequestHandler
 			jsonObject.addProperty("classe", fileName);
 >>>>>>> develop
 */
-			String fileName = this.saveFile(request);
+			List<String> filesClass = new PersistFile().save(request);
+			Utils utils = Utils.getInstance();			
+			String fileName = utils.convertListToString(filesClass, ", ");
+			
+			/*String fileName = this.saveFile(request);
 			List<String> filesClass = new ArrayList<String>();
 			filesClass.add(fileName);
 			Utils utils = Utils.getInstance();
 			fileName = utils.convertListToString(filesClass, ", ");
+			*/
 			
 			jsonObject.addProperty("success", true);
 			jsonObject.addProperty("msg", (filesClass.size() > 1 ? "Classes Java \""+ fileName +"\" cadastradas com sucesso." : "Classe Java \""+ fileName +"\" cadastrada com sucesso."));
