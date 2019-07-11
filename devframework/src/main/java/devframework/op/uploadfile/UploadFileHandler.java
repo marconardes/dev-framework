@@ -23,8 +23,9 @@ public class UploadFileHandler implements IJsonRequestHandler
 		}
 		catch ( Exception e )
 		{
-			e.printStackTrace();			
+			e.printStackTrace();
 			jsonObject.addProperty("success", false);
+			jsonObject.addProperty("msg", e.getMessage());
 		}
 		
 		return jsonObject;	

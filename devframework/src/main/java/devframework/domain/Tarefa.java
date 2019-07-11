@@ -1,9 +1,8 @@
 package devframework.domain;
 
-import devframework.annotations.ServiceClass;
 import devframework.annotations.ServiceMethod;
 
-@ServiceClass
+@devframework.annotations.ServiceClass
 public class Tarefa {
 	
 	private String nome = "compromissos";
@@ -13,6 +12,7 @@ public class Tarefa {
 		return nome;
 	}
 
+	@ServiceMethod
 	public void setNome(String nome) {
 		this.nome = nome;
 	}	

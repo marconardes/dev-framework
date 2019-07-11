@@ -68,6 +68,13 @@
 			<version>1.10.19</version>
 		</dependency>
 
+		<!-- https://mvnrepository.com/artifact/org.webjars/jquery-maskedinput -->
+		<dependency>
+		    <groupId>org.webjars</groupId>
+		    <artifactId>jquery-maskedinput</artifactId>
+		    <version>1.4.0</version>
+		</dependency>
+
 		<!-- https://mvnrepository.com/artifact/com.google.code.gson/gson -->
 		<dependency>
 			<groupId>com.google.code.gson</groupId>

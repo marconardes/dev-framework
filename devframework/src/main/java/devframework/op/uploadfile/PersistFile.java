@@ -14,8 +14,12 @@ import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import devframework.utils.Utils;
 import devframework.validation.ClassValidationService;
 
+import devframework.domain.FileClass;
+
 public class PersistFile {
+	
 	public String save(HttpServletRequest request) throws Exception {
+		
 		Utils utils = Utils.getInstance(); 
 
 		// Create a factory for disk-based file items
@@ -51,7 +55,12 @@ public class PersistFile {
 
 						return (fileName);
 					}
-				} finally {
+					
+				} 
+				catch ( Exception e ) {
+					throw new Exception("O arquivo \"" + fileName + "\", não possui uma classe ou método válido!");
+				}				
+				finally {
 					// apaga o arquivo temporario
 					tmpFile.delete();
 				}
@@ -61,17 +70,36 @@ public class PersistFile {
 		throw new Exception("Erro ao tentar salvar, nenhuma classe compativel encontrada!");
 	}
 
-	public List<String> list() throws FileNotFoundException {
+	public List<FileClass> list() throws FileNotFoundException {
 		// diretorio de upload
 		File uploadDir = new File(Utils.getInstance().getProperty("upload.dir", System.getProperty("java.io.tmpdir")));
 		if(!uploadDir.exists()) {
-			throw new FileNotFoundException("Diretï¿½rio nï¿½o encontrado");
+			//throw new FileNotFoundException("Diretorio nao encontrado");
+			uploadDir.mkdir();
 		}
 		// procura as classes salvas
 		List<String> classesList = new ArrayList<>();
-		search(".*\\.class", uploadDir, classesList);
+		searchFile(".*\\.class", uploadDir, classesList);
+				
+		List<FileClass> fileClasses = new ArrayList<FileClass>();
+		for (String item : classesList) {
+			
+			FileClass fileClass = new FileClass();
+			
+			try {
+				Class<?> clazz = ClassValidationService.getInstance().isClassValid(item);
+				fileClass.setClassName(clazz.getName());
+				fileClass.setPackageName(clazz.getPackageName());
+				fileClass.setMethods(fileClass.listMethods(item));
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			fileClasses.add(fileClass);
+		}
 
-		return classesList;
+		return fileClasses;
 	}
 
 	private void saveClass(FileItem fileItem, String fileName) throws Exception {
@@ -106,7 +134,7 @@ public class PersistFile {
 			}
 			if (f.isFile() && f.getName().matches(pattern)) {
 				try {
-					Class clazz = ClassValidationService.getInstance().isClassValid(f.getPath());
+					Class<?> clazz = ClassValidationService.getInstance().isClassValid(f.getPath());
 					if (clazz != null) {
 						result.add(clazz.getName());
 					}
@@ -114,7 +142,25 @@ public class PersistFile {
 					e.printStackTrace();
 				}
 			}
-
 		}
 	}
+	
+	private static void searchFile(final String pattern, final File folder, List<String> result) {
+		for (final File f : folder.listFiles()) {
+			if (f.isDirectory()) {
+				searchFile(pattern, f, result);
+			}
+			if (f.isFile() && f.getName().matches(pattern)) {
+				try {
+					Class<?> clazz = ClassValidationService.getInstance().isClassValid(f.getPath());
+					if (clazz != null) {
+						result.add(f.getPath());
+					}
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		}
+	}
+	
 }

@@ -29,7 +29,7 @@ public class FrontControllerServlet extends HttpServlet {
 		// inicialia o mapa de tratamento de requisicao
 		this.handlerMap = new HashMap<String, IRequestHandler>();
 		this.handlerMap.put("uploadFile.op", new UploadFileHandler());
-		this.handlerMap.put("listClasses.op", new ListClassesHandler());		
+		this.handlerMap.put("listClasses.op", new ListClassesHandler());
 	}
 
 	/**
@@ -55,7 +55,7 @@ public class FrontControllerServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
 	{
-		// redireciona para o metodo doPost()
+		// redireciona para o metodo doGet()
 		doGet(request, response);
 	}
 	
@@ -71,7 +71,7 @@ public class FrontControllerServlet extends HttpServlet {
 		IRequestHandler handler = this.handlerMap.get(requisicao);
 		
 		// redireciona para a pagina de erro caso nao exista classe que trate a requisicao
-		return handler != null ? handler : new ErrorRequestHandler("Op√ß√£o inv√°lida: " + requisicao);
+		return handler != null ? handler : new ErrorRequestHandler("OpÁ„o inv·lida: " + requisicao);
 	}
 
 	
