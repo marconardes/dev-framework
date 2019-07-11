@@ -2,11 +2,15 @@ package devframework.utils;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
 
 import org.apache.bcel.classfile.ClassFormatException;
 import org.apache.bcel.classfile.ClassParser;
 import org.apache.bcel.classfile.JavaClass;
+
+import devframework.op.uploadfile.PersistFile;
 
 /**
  * Classe com metodos utilitarios para a aplicacao.
@@ -72,6 +76,21 @@ public class Utils
 		{
 			return defaultValue;
 		}
+	}
+	
+	/**
+	 * Recebe uma lista e retorna uma string 
+	 */
+	public String convertListToString(List<String> list, String concat) {
+		
+		String text = "";
+		int count = 0;
+		for (String item : list) {
+			count++;
+			text += item + (count < list.size() ? concat : "");
+		}
+		
+		return text;
 	}
 	
 	public JavaClass getClassInfo(String classPath) throws ClassFormatException, IOException

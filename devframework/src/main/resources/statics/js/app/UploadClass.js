@@ -122,7 +122,7 @@ app.uploadClass = {
                         $("#inputGroupFile01").text("Selecione uma classe java");
                         $('#classModal').modal('hide');
                         alertBt({
-       	        	      messageText: "Arquivo \""+ data.classe +"\" cadastrado com sucesso.",
+       	        	      messageText: data.msg,
        	        	      headerText: "Confirmação",
        	        	      alertType: "success"
        	        	    });
