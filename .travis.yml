@@ -15,8 +15,8 @@ jdk:
 sudo: false
 
 # run maven goals
+before_script: cd devframework
 script:
-- cd devframework
 - mvn test
 - mvn install
 - rm -f dist/*.war && cp target/*.war dist/
